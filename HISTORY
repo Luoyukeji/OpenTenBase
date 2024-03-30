@@ -3,3 +3,9 @@ https://github.com/OpenTenBase/OpenTenBase
 
 Distribution file sets include release notes for their version and preceding
 versions.  Visit the file doc/src/sgml/html/release.html in an HTML browser.
+
+
+译文：
+OpenTenBase 所有版本的发布说明可以在线上找到，网址为 https://github.com/OpenTenBase/OpenTenBase。
+
+分发文件集包括其版本和之前版本的发布说明。请在 HTML 浏览器中访问文件 doc/src/sgml/html/release.html。
