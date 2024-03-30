@@ -1,32 +1,31 @@
-/*-------------------------------------------------------------------------
- *
+/*
  * base64.c
- *      Encoding and decoding routines for base64 without whitespace.
+ *      提供无空白字符的 Base64 编码和解码例程。
  *
- * Copyright (c) 2001-2017, PostgreSQL Global Development Group
+ * 版权所有 (c) 2001-2017, PostgreSQL 全球开发组
  *
  *
- * IDENTIFICATION
+ * 标识
  *      src/common/base64.c
  *
- *-------------------------------------------------------------------------
  */
 
+// 根据是否为前端应用程序（如 psql）选择包含不同的头文件
 #ifndef FRONTEND
-#include "postgres.h"
+#include "postgres.h" // 后端代码包含的核心头文件
 #else
-#include "postgres_fe.h"
+#include "postgres_fe.h" // 前端代码包含的头文件
 #endif
 
-#include "common/base64.h"
+#include "common/base64.h" // 包含 Base64 编码和解码所需的公共定义
 
-/*
- * BASE64
- */
+// BASE64 编码相关的定义和函数
 
+// Base64 编码字符集
 static const char _base64[] =
 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
+// Base64 编码时的查找表，对应字符值到编码索引的映射
 static const int8 b64lookup[128] = {
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -43,6 +42,7 @@ static const int8 b64lookup[128] = {
  *
  * Encode into base64 the given string.  Returns the length of the encoded
  * string.
+ * 将给定的二进制字符串编码为 Base64 字符串，并返回编码后字符串的长度
  */
 int
 pg_b64_encode(const char *src, int len, char *dst)
@@ -90,6 +90,9 @@ pg_b64_encode(const char *src, int len, char *dst)
  *
  * Decode the given base64 string.  Returns the length of the decoded
  * string on success, and -1 in the event of an error.
+ *
+ * 将给定的 Base64 编码字符串解码为原始的二进制字符串，并在成功时返回解码后字符串
+ * 的长度，出错时返回 -1
  */
 int
 pg_b64_decode(const char *src, int len, char *dst)
@@ -172,10 +175,8 @@ pg_b64_decode(const char *src, int len, char *dst)
 /*
  * pg_b64_enc_len
  *
- * Returns to caller the length of the string if it were encoded with
- * base64 based on the length provided by caller.  This is useful to
- * estimate how large a buffer allocation needs to be done before doing
- * the actual encoding.
+ * 根据调用者提供的源字符串长度，返回使用 Base64 编码后的字符串长度。
+ * 这对于估计在实际编码之前需要分配多大的缓冲区非常有用。
  */
 int
 pg_b64_enc_len(int srclen)
@@ -187,10 +188,8 @@ pg_b64_enc_len(int srclen)
 /*
  * pg_b64_dec_len
  *
- * Returns to caller the length of the string if it were to be decoded
- * with base64, based on the length given by caller.  This is useful to
- * estimate how large a buffer allocation needs to be done before doing
- * the actual decoding.
+ * 根据调用者提供的源字符串长度，返回 Base64 解码后的字符串长度。
+ * 这对于估计在实际解码之前需要分配多大的缓冲区非常有用。
  */
 int
 pg_b64_dec_len(int srclen)
